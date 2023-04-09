@@ -22,6 +22,9 @@ class Student:
         avg_grade = sum(sum(self.grades.values(), [])) / len(sum(self.grades.values(), []))
         return f'Студент\nИмя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за домашние задания: {avg_grade:.1f}\nКурсы в процессе изучения: {courses_in_progress}\nЗавершенные курсы: {finished_courses}'
 
+    def __lt__(self, other):
+        return (sum(sum(self.grades.values(), [])) / len(sum(self.grades.values(), []))) < (sum(sum(other.grades.values(), [])) / len(sum(other.grades.values(), [])))
+
 class Mentor:
     def __init__(self, name, surname):
         self.name = name
@@ -36,6 +39,11 @@ class Lecturer(Mentor):
     def __str__(self):
         avg_grade = sum(sum(self.grades.values(), [])) / len(sum(self.grades.values(), []))
         return f'Лектор\nИмя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за лекции: {avg_grade:.1f}'
+    
+    def __lt__(self, other):
+        return (sum(sum(self.grades.values(), [])) / len(sum(self.grades.values(), []))) < (sum(sum(other.grades.values(), [])) / len(sum(other.grades.values(), [])))
+        
+        
 
 class Reviewer(Mentor):
     def __init__(self, name, surname):
@@ -105,16 +113,15 @@ print('Проверяющие')
 print(mentors[0])
 print(mentors[1])
 print(mentors[2])
+print()
 
-sorted_lecturer = sorted(lecturers, key=lambda lecturer: sum(sum(lecturer.grades.values(), [])) / len(sum(lecturer.grades.values(), [])), reverse=True)
-best_lecturer = sorted_lecturer[0]
+highest_grade_lecturer = max(lecturers)
+print(highest_grade_lecturer)
+print()
 
-print(best_lecturer)
-
-sorted_students = sorted(students, key=lambda student: sum(sum(student.grades.values(), [])) / len(sum(student.grades.values(), [])), reverse=True)
-best_student = sorted_students[0]
-
-print(best_student)
+highest_grade_student = max(students)
+print(highest_grade_student)
+print()
 
 print(f"Средняя оценка на курсе: {course_avg_grade('Python'):.1f}")
 
